@@ -124,13 +124,6 @@ yolo.CameraDetector(
         false)             // whether save frames
 ```
 
-
-After that you can convert the original frames with ffmpeg to an image. Play with the parameter `bgr24`/`rgb24` if the color channels are swapped e.g. blueish image:
-
-```sh
-ffmpeg -f rawvideo -s 768x576 -pix_fmt bgr24 -i data.raw data.png
-```
-
 Finally if you save frames, you can use the below command to reassemble these frames to a video.
 
 ``` sh
