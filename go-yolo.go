@@ -4,9 +4,15 @@
 package yolo
 
 // #cgo pkg-config: opencv
-// #cgo LDFLAGS: -L. -ldarknet
+// #cgo linux LDFLAGS: -ldarknet -lm -L/usr/local/cuda/lib64 -lcuda -lcudart -lcublas -lcurand
+// #cgo darwin LDFLAGS: -ldarknet
 // #include "yolo.h"
 import "C"
+
+// SetGPU set a gpu device you want
+func SetGPU(gpu int) {
+	C.set_gpu(C.int(gpu))
+}
 
 // ImageDetector recognize a image
 func ImageDetector(dc, cf, wf, fn string, t, ht float64, of ...string) {

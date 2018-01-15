@@ -4,6 +4,9 @@
 #include <cv.h>
 #include <highgui.h>
 
+// Set a gpu device
+void set_gpu(int gpu);
+
 // Recognize a image
 void image_detector(char *datacfg, char *cfgfile, char *weightfile, char *filename,
 	float thresh, float hier_thresh, char *outfile);

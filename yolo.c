@@ -2,6 +2,11 @@
 #include "yolo.h"
 
 
+void set_gpu(int gpu)
+{
+    cuda_set_device(gpu);
+}
+
 void image_detector(char *datacfg, char *cfgfile, char *weightfile, char *filename, float thresh, float hier_thresh, char *outfile)
 {
     list *options = read_data_cfg(datacfg);
