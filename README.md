@@ -36,19 +36,8 @@ Requires:
 
 - darknet is installed correctly on your system
 
-  There are two ways to install it.
 
-  1. Install [official version](https://github.com/pjreddie/darknet)
-  
-  ```sh
-  git clone https://github.com/pjreddie/darknet
-  cd darknet
-  make OPENCV=1 # optionally GPU=1
-  cp libdarknet.a /usr/local/lib
-  cp include/darknet.h /usr/local/include
-  ```
-  
-  2. Install [this fork](https://github.com/ZanLabs/darknet.git)
+  - Install [this fork](https://github.com/ZanLabs/darknet.git)
   
   ```sh
   git clone https://github.com/ZanLabs/darknet.git
@@ -57,10 +46,11 @@ Requires:
   make install
   ```
 
-The fork contains some workaround to [makefile](https://github.com/pjreddie/darknet/compare/master...ZanLabs:master).
+The fork contains some [workaround](https://github.com/pjreddie/darknet/compare/master...ZanLabs:master).
 
 - Makefile is extended to build a static library (darknet.a).
 - Makefile is extended with `install` and `uninstall` commands which install the library globally so that this module can easily find and link it.
+- Support to save to a video file when detect a video.
 
 
 ## Installation
@@ -74,6 +64,17 @@ go get github.com/ZanLabs/go-yolo
 Firstly prepare your `cfg`, `data` folders and download `.weight` files from the darknet project.
 
 
+Specity a GPU device:
+
+```golang
+import (
+    "github.com/ZanLabs/go-yolo"
+)
+
+// If not set, default GPU #0
+yolo.SetGPU(1)
+```
+
 Detect on a single image:
 
 ```golang
@@ -82,10 +83,10 @@ import (
 )
 
 yolo.ImageDetector(
-        "./cfg/coco.data", // datacfg
-        "./cfg/yolo.cfg",  // cfgfile
-        "./yolo.weights",  // weightfile
-        "./data/dog.jpg",  // image that you want recognize
+        "./cfg/coco.data", 		// datacfg
+        "./cfg/yolo.cfg",  		// cfgfile
+        "./yolo.weights",  		// weightfile
+        "./data/dog.jpg",  		// image that you want recognize
         0.24,					// thresh default: 0.24
         0.5)					// hierThresh default: 0.5
 ```
@@ -104,7 +105,7 @@ yolo.VideoDetector(
         "/path/video.mp4", // video that you want recognize
         0.24,              // thresh default: 0.24
         0.5,               // hierThresh default: 0.5
-        false)             // whether save frames
+        false)             // whether save video to disk
 ```
 
 Detect video from camera:
@@ -121,11 +122,6 @@ yolo.CameraDetector(
         0,                 // Camera device default: 0
         0.24,              // thresh default: 0.24
         0.5,               // hierThresh default: 0.5
-        false)             // whether save frames
+        false)             // whether save video to disk
 ```
 
-Finally if you save frames, you can use the below command to reassemble these frames to a video.
-
-``` sh
-ffmpeg -framerate 25 -i output_%08d.jpg output.mp4
-```
