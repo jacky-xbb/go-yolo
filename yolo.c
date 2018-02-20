@@ -72,7 +72,7 @@ void image_detector(char *datacfg, char *cfgfile, char *weightfile, char *filena
 }
 
 void video_detector(char *datacfg, char *cfgfile, char *weightfile, char *filename,
-        float thresh, float hier_thresh, char *prefix)
+        float thresh, float hier_thresh, char *outfile)
 {
     int cam_index = 0;
     int frame_skip = 0;
@@ -88,11 +88,11 @@ void video_detector(char *datacfg, char *cfgfile, char *weightfile, char *filena
     char *name_list = option_find_str(options, "names", "data/names.list");
     char **names = get_labels(name_list);
     demo(cfgfile, weightfile, thresh, cam_index, filename, names, classes, frame_skip,
-            prefix, avg, hier_thresh, width, height, fps, fullscreen);
+            outfile, avg, hier_thresh, width, height, fps, fullscreen);
 }
 
 void camera_detector(char *datacfg, char *cfgfile, char *weightfile, int camindex,
-        float thresh, float hier_thresh, char *prefix)
+        float thresh, float hier_thresh, char *outpath)
 {
     char *filename = NULL;
     int frame_skip = 0;
@@ -108,5 +108,5 @@ void camera_detector(char *datacfg, char *cfgfile, char *weightfile, int caminde
     char *name_list = option_find_str(options, "names", "data/names.list");
     char **names = get_labels(name_list);
     demo(cfgfile, weightfile, thresh, camindex, filename, names, classes, frame_skip,
-            prefix, avg, hier_thresh, width, height, fps, fullscreen);
+            outpath, avg, hier_thresh, width, height, fps, fullscreen);
 }

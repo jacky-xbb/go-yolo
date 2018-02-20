@@ -38,8 +38,8 @@ func ImageDetector(dc, cf, wf, fn string, t, ht float64, of ...string) {
 }
 
 // VideoDetector recognize a video
-func VideoDetector(dc, cf, wf, fn string, t, ht float64, is bool) {
-    if is {
+func VideoDetector(dc, cf, wf, fn string, t, ht float64, of ...string) {
+    if len(of) > 0 {
         C.video_detector(
             C.CString(dc),
             C.CString(cf),
@@ -47,7 +47,7 @@ func VideoDetector(dc, cf, wf, fn string, t, ht float64, is bool) {
             C.CString(fn),
             C.float(t),
             C.float(ht),
-            C.CString("output"))
+            C.CString(of[0]))
     } else {
         C.video_detector(
             C.CString(dc),
@@ -61,8 +61,8 @@ func VideoDetector(dc, cf, wf, fn string, t, ht float64, is bool) {
 }
 
 // CameraDetector recognize a camera stream
-func CameraDetector(dc, cf, wf string, i int, t, ht float64, is bool) {
-    if is {
+func CameraDetector(dc, cf, wf string, i int, t, ht float64, of ...string) {
+    if len(of) > 0 {
         C.camera_detector(
             C.CString(dc),
             C.CString(cf),
@@ -70,7 +70,7 @@ func CameraDetector(dc, cf, wf string, i int, t, ht float64, is bool) {
             C.int(i),
             C.float(t),
             C.float(ht),
-            C.CString("output"))
+            C.CString(of[0]))
     } else {
         C.camera_detector(
             C.CString(dc),
