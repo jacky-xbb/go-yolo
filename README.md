@@ -8,8 +8,9 @@
 - [YOLO (You only look once)](http://pjreddie.com/darknet/yolo/)
 
 ## Features
+- Specify a GPU device
 
-Currently, the wrapper can recognize objects from webcam/video or a image file. Equivalent to
+- Recognize objects from webcam/video or a image file. Equivalent to
 
 ```sh
 # image
@@ -51,6 +52,7 @@ The fork contains some [workaround](https://github.com/pjreddie/darknet/compare/
 - Makefile is extended to build a static library (darknet.a).
 - Makefile is extended with `install` and `uninstall` commands which install the library globally so that this module can easily find and link it.
 - Support to save to a video file when detect a video.
+- Support to the specific output path.
 
 
 ## Installation
@@ -61,10 +63,10 @@ go get github.com/ZanLabs/go-yolo
 
 ## Usage
 
-Firstly prepare your `cfg`, `data` folders and download `.weight` files from the darknet project.
+Firstly prepare your [cfg](https://github.com/ZanLabs/darknet/tree/master/cfg), [data](https://github.com/ZanLabs/darknet/tree/master/data) folders and download [weight](http://pjreddie.com/media/files/yolo.weights) files from the darknet project.
 
 
-Specity a GPU device:
+Specify a GPU device:
 
 ```golang
 import (
@@ -82,6 +84,7 @@ import (
     "github.com/ZanLabs/go-yolo"
 )
 
+// not save
 yolo.ImageDetector(
         "./cfg/coco.data", 		// datacfg
         "./cfg/yolo.cfg",  		// cfgfile
@@ -89,6 +92,16 @@ yolo.ImageDetector(
         "./data/dog.jpg",  		// image that you want recognize
         0.24,					// thresh default: 0.24
         0.5)					// hierThresh default: 0.5
+
+// save image
+yolo.ImageDetector(
+        "./cfg/coco.data", 		// datacfg
+        "./cfg/yolo.cfg",  		// cfgfile
+        "./yolo.weights",  		// weightfile
+        "./data/dog.jpg",  		// image that you want recognize
+        0.24,					// thresh default: 0.24
+        0.5, 					// hierThresh default: 0.5
+        "/PATHTO/A_IMAGE_NAME")    // ignore the suffix
 ```
 
 Detect a video from a file:
@@ -98,14 +111,24 @@ import (
     "github.com/ZanLabs/go-yolo"
 )
 
+// not save
 yolo.VideoDetector(
         "./cfg/coco.data", // datacfg
         "./cfg/yolo.cfg",  // cfgfile
         "./yolo.weights",  // weightfile
         "/path/video.mp4", // video that you want recognize
         0.24,              // thresh default: 0.24
-        0.5,               // hierThresh default: 0.5
-        false)             // whether save video to disk
+        0.5)               // hierThresh default: 0.5
+
+// save video
+yolo.VideoDetector(
+        "./cfg/coco.data", 		// datacfg
+        "./cfg/yolo.cfg",  		// cfgfile
+        "./yolo.weights",  		// weightfile
+        "/path/video.mp4", 		// video that you want recognize
+        0.24,              		// thresh default: 0.24
+        0.5,               		// hierThresh default: 0.5
+        "/PATHTO/A_VIDEO_NAME") // ignore the suffix
 ```
 
 Detect video from camera:
@@ -115,13 +138,23 @@ import (
     "github.com/ZanLabs/go-yolo"
 )
 
+// not save
 yolo.CameraDetector(
         "./cfg/coco.data", // datacfg
         "./cfg/yolo.cfg",  // cfgfile
         "./yolo.weights",  // weightfile
         0,                 // Camera device default: 0
         0.24,              // thresh default: 0.24
-        0.5,               // hierThresh default: 0.5
-        false)             // whether save video to disk
+        0.5)               // hierThresh default: 0.5
+ 
+// save frames into a dir you want
+yolo.CameraDetector(
+        "./cfg/coco.data", 	// datacfg
+        "./cfg/yolo.cfg",  	// cfgfile
+        "./yolo.weights",  	// weightfile
+        0,                 	// Camera device default: 0
+        0.24,              	// thresh default: 0.24
+        0.5,               	// hierThresh default: 0.5
+        "/PATHTO") 			// ignore the suffix
 ```
 
