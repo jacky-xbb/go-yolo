@@ -4,6 +4,10 @@
 #include <cv.h>
 #include <highgui.h>
 
+// Mute compile warnings
+void cuda_set_device(int n);
+
+
 // Set a gpu device
 void set_gpu(int gpu);
 
